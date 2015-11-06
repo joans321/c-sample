@@ -4,14 +4,18 @@ srcs := $(wildcard src/*.c)
 objs := $(patsubst %.c,%.o,$(srcs))
 target := hello
 
+CFLAGS := -Iinclude
+
 all: $(target)
 
 $(target): $(objs)
-	cc $(objs) -o $@
+	$(CC) $(objs) -o $@
 
 clean:
 	rm -f $(target) $(objs)
+	make -C test clean
 
 test: all
-	echo test
+	make -C test
+	./test/hello_unittest
 
